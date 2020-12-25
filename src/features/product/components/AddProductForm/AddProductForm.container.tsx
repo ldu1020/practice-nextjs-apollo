@@ -8,7 +8,7 @@ interface Props {
 
 const AddProductFormContainer: React.FC<Props> = ({ addProduct }) => {
   const [state, setstate] = useState({
-    id: Date.now(),
+    id: 0,
     reference: '',
     price: 0,
   });
@@ -21,9 +21,9 @@ const AddProductFormContainer: React.FC<Props> = ({ addProduct }) => {
     });
   };
   const onClick = () => {
-    addProduct(state);
+    addProduct({...state,id:Date.now()});
     setstate({
-      id: Date.now() + 1,
+      id: 0,
       reference: '',
       price: 0,
     });

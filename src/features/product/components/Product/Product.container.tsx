@@ -11,7 +11,7 @@ import {
 
 const ProductContainer = () => {
   const [state, setState] = useState<Product[]>([]);
-  const { data, error } = useGetAllProduct();
+  const { data, error,fetchMore } = useGetAllProduct();
   const [addProduct, { data: data2 }] = useAddProduct();
   const [removeProduct] = useRemoveProduct();
 
@@ -31,12 +31,26 @@ const ProductContainer = () => {
     removeProduct({ variables: { id } });
   };
 
+  const handleFetchMoreList = () => {
+    fetchMore({
+      variables:{
+        page:Math.ceil(state.length / 10), perPage:10
+      }
+    })
+  }
+
   return (
     <div>
+      <button onClick={()=>{
+       fetchMore({
+         variables:{page:1,perPage:5}
+       })
+      }}>add list</button>
       <AddProductFormContainer addProduct={handleAddProduct} />
       <ProductListContainer
         productList={state}
         removeProduct={handleRemoveProduct}
+        fetchMoreList={handleFetchMoreList}
       />
     </div>
   );

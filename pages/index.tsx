@@ -1,7 +1,7 @@
 /** @format */
 
-import Layout from '../components/Layout';
-import ProductComponent from '../src/components/product';
+import Layout from '../src/components/Layout';
+import ProductComponent from '../src/features/product';
 import { ApolloProvider } from '@apollo/client';
 import { client } from '../generated/graphql';
 
