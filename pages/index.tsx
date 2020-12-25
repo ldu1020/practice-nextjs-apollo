@@ -1,16 +1,16 @@
 /** @format */
 
-import Layout from '../src/components/Layout';
 import ProductComponent from '../src/features/product';
 import { ApolloProvider } from '@apollo/client';
 import { client } from '../generated/graphql';
+import Layout from '../src/components/Layout';
 
 const IndexPage = () => (
-  <ApolloProvider client={client}>
-    <Layout title='Home | Next.js + TypeScript Example'>
-      <ProductComponent />
+    <Layout title="PRODUCT">
+      <ApolloProvider client={client}>
+        <ProductComponent />
+      </ApolloProvider>
     </Layout>
-  </ApolloProvider>
 );
 
 export default IndexPage;

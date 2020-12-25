@@ -1,8 +1,9 @@
 /** @format */
 
-import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
+import ListItem from '../../../../components/ListItem';
+import { useRouter } from 'next/router'
 
 
 
@@ -13,8 +14,11 @@ interface Props {
 }
 
 const StyledListWrapper = styled.div`
-  height:20rem;
+  height:25rem;
   overflow-y : auto;
+  border:0.5px solid gray;
+  padding: 1rem;
+  border-radius:0.5rem;
 `
 
 const ProductListContainer: React.FC<Props> = ({
@@ -22,6 +26,7 @@ const ProductListContainer: React.FC<Props> = ({
   removeProduct,
   fetchMoreList
 }) => {
+  const router = useRouter()
 
   const handleScroll = (e:React.UIEvent<HTMLDivElement, UIEvent>) => {
     const {currentTarget} = e
@@ -29,30 +34,35 @@ const ProductListContainer: React.FC<Props> = ({
       currentTarget.scrollTop + currentTarget.clientHeight >=
       currentTarget.scrollHeight
     ) {
-fetchMoreList()
-console.log("fetch!!")
+    fetchMoreList()
+    console.log("fetch!!")
     }
   };
+
+  const goToDetailProduct = (id:string) =>{
+    router.push(`/products/${id}`)
+  }
+
+  const infoSet = {
+    reference:"제품명",
+    price:"가격"
+  }
+
+  const clickFnSets = [{
+    name:"제거하기",
+    argKeyOfDataSet:"id",
+    clickFn: removeProduct
+  },{
+    name:"상세보기",
+    argKeyOfDataSet:"id",
+    clickFn: goToDetailProduct
+  }]
 
   return (
     <StyledListWrapper onScroll={handleScroll}>
       {productList.map((li) => {
         return (
-          <div key={li.id}>
-            <h1>{li.id}</h1>
-            <h4>{li.reference}</h4>
-            <p>{li.price} $</p>
-
-            <button
-              onClick={() => {
-                removeProduct(li.id);
-              }}>
-              제거
-            </button>
-            <Link href={`/products/${li.id}`}>
-              <button>상세보기</button>
-            </Link>
-          </div>
+          <ListItem key={li.id} data={li} infoSet={infoSet} clickFnSet={clickFnSets}/>
         );
       })}
     </StyledListWrapper>

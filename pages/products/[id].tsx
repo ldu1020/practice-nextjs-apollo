@@ -1,6 +1,5 @@
 /** @format */
 
-import Layout from '../../components/Layout';
 import { client, GET_PRODUCT_DETAIL } from '../../generated/graphql';
 import { useState } from 'react';
 
@@ -20,10 +19,10 @@ const ProductDetail = ({ id }: Props) => {
     });
   if (state) {
     return (
-      <Layout title={`${state.reference} | Next.js + TypeScript Example`}>
+      <div>
         <h1>{state.reference}</h1>
         <p>{state.description}</p>
-      </Layout>
+      </div>
     );
   } else {
     return <div>데이터 조회실패</div>;

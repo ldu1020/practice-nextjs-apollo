@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { useState } from 'react';
+import Input from '../../../../components/Input';
 
 interface Props {
   addProduct: (item: Product) => void;
@@ -30,13 +31,14 @@ const AddProductFormContainer: React.FC<Props> = ({ addProduct }) => {
   };
   return (
     <div>
-      <input
+      <Input
         type='text'
+        label="제품명"
         name='reference'
         onChange={onChange}
         value={state.reference}
       />
-      <input type='text' name='price' onChange={onChange} value={state.price} />
+      <Input type='text' name='price' onChange={onChange} value={state.price} />
       <button onClick={onClick}>add</button>
     </div>
   );

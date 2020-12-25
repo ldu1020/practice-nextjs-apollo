@@ -1,18 +1,52 @@
 import React from 'react'
-import Link from 'next/link'
 
-import { User } from '../interfaces'
 
-type Props = {
-  data: User
+interface Props {
+  data: DataSet
+  infoSet: InfoSet
+  clickFnSet: ClickFnSet[];
 }
 
-const ListItem = ({ data }: Props) => (
-  <Link href="/users/[id]" as={`/users/${data.id}`}>
-    <a>
-      {data.id}: {data.name}
-    </a>
-  </Link>
-)
+interface InfoSet {
+  [itemIndex :string] : string
+}
+interface DataSet{
+  [itemIndex : string] : any
+}
+
+
+interface ClickFnSet{
+  name:string
+  argKeyOfDataSet: string | string[]
+  clickFn : (data : any | any[]) => void
+}
+
+
+const ListItem = ({ data ,infoSet,clickFnSet}: Props) => {
+
+  const InfoArr = Object.keys(infoSet)
+  return(
+  <div>
+    <ul>
+    {InfoArr.map((list)=> <p>{infoSet[list]} : {data[list]}</p>
+)}
+    </ul>
+    <div>
+      {clickFnSet.map(({argKeyOfDataSet, clickFn , name})=>
+        (
+        <button onClick={()=>{
+         if(Array.isArray(argKeyOfDataSet)){
+           const argArr = argKeyOfDataSet.map(li=>data[li])
+           clickFn.apply(null,[argArr])
+         }else{
+           clickFn(data[argKeyOfDataSet])
+         }
+        }}>{name}</button>
+        )
+      )}
+    </div>
+   
+  </div>
+)}
 
 export default ListItem

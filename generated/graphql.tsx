@@ -32,6 +32,7 @@ export const GET_ALL_PRODUCT = gql`
    query AllProduct($page:Int,$perPage:Int){
     allProducts(page:$page,perPage:$perPage){
       id
+      category_id
       reference
       price
     }}
@@ -52,6 +53,7 @@ export const FETCH_ADD_PRODUCT = gql`
       stock: 0
     ) {
       id
+      category_id
       reference
       price
     }
