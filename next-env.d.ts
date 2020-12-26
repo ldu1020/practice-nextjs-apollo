@@ -13,3 +13,12 @@ interface ProductDetail extends Product {
   category_id: number;
   description: string;
 }
+
+interface Category {
+  id:number
+  name:string
+}
+
+interface CategoryDetail extends Category{
+  Product:Product[]
+}
