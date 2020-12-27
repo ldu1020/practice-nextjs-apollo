@@ -7,18 +7,21 @@ interface Product {
   id: number;
   price: number;
   reference: string;
+  category_id: number;
+  Category?: {
+    name: any;
+  };
 }
 
 interface ProductDetail extends Product {
-  category_id: number;
   description: string;
 }
 
 interface Category {
-  id:number
-  name:string
+  id: number;
+  name: string;
 }
 
-interface CategoryDetail extends Category{
-  Product:Product[]
+interface CategoryDetail extends Category {
+  Products: Product[];
 }

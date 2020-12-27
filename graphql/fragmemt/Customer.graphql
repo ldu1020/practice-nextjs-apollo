@@ -1,8 +1,0 @@
-fragment Basic on Customer {
-  allCustomers {
-      first_name
-      last_name
-      email
-      avatar
-    }
-}

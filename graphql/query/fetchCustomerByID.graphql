@@ -1,6 +1,0 @@
-query sonting($id:ID!){
-	Customer(id:$id){
-		last_name
-    first_name
-  }
-}

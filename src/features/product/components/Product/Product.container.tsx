@@ -1,53 +1,50 @@
 /** @format */
 
-import React, { useEffect, useState } from 'react';
-import ProductListContainer from '../ProductList/ProductList.container';
-import AddProductFormContainer from '../AddProductForm/AddProductForm.container';
+import React from "react";
 import {
   useAddProduct,
   useRemoveProduct,
   useGetAllProduct,
-} from '../../../../../generated/graphql';
+} from "../../../../../graphql/graphql";
+import ProductPresenter from "./Product.presenter";
 
 const ProductContainer = () => {
-  const [state, setState] = useState<Product[]>([]);
-  const { data, error,fetchMore } = useGetAllProduct();
-  const [addProduct, { data: data2 }] = useAddProduct();
+  const PER_PAGE = 7;
+
+  const { data, fetchMore, refetch } = useGetAllProduct(0, 7);
+  const [addProduct] = useAddProduct();
   const [removeProduct] = useRemoveProduct();
 
-  useEffect(() => {
-    data && setState(data.allProducts);
-  }, [data]);
-
   const handleAddProduct = (item: Product) => {
-    setState([...state, item]);
     addProduct({ variables: item });
-    console.log(data2);
+    !data || (data.allProducts.length <= PER_PAGE && refetch());
   };
 
   const handleRemoveProduct = (id: number) => {
-    const updated = state.filter((li) => li.id !== id);
-    setState(updated);
-    removeProduct({ variables: { id } });
+    removeProduct({ variables: { id } }).then(() => {
+      refetch({ page: 0, perPage: 0 });
+    });
   };
 
   const handleFetchMoreList = () => {
-    fetchMore({
-      variables:{
-        page:Math.ceil(state.length / 7), perPage:7
-      }
-    })
-  }
+    const PER_PAGE = 7;
+    if (data) {
+      fetchMore({
+        variables: {
+          page: Math.ceil((data.allProducts.length + 1) / PER_PAGE),
+          perPage: PER_PAGE,
+        },
+      });
+    }
+  };
 
   return (
-    <>
-      <AddProductFormContainer addProduct={handleAddProduct} />
-      <ProductListContainer
-        productList={state}
-        removeProduct={handleRemoveProduct}
-        fetchMoreList={handleFetchMoreList}
-      />
-    </>
+    <ProductPresenter
+      productList={data ? data.allProducts : []}
+      addProduct={handleAddProduct}
+      removeProduct={handleRemoveProduct}
+      fetchMoreList={handleFetchMoreList}
+    />
   );
 };
 

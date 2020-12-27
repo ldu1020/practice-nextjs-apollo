@@ -1,4 +1,3 @@
-
 type Customer {
   id: ID!
   first_name: String
@@ -11,10 +10,10 @@ type Customer {
   birthday: String
   first_seen: String
   last_seen: String
-  has_ordered: Boolean,
+  has_ordered: Boolean
   latest_purchase: String
   has_newsletter: String
-  groups: [String],
+  groups: [String]
   nb_commands: Int
   total_spent: Float
 }
@@ -93,19 +92,49 @@ type ReviewPage {
 }
 
 type Query {
-  getPageOfCustomers(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): CustomerPage
+  getPageOfCustomers(
+    page: Int
+    perPage: Int
+    sortField: String
+    sortOrder: String
+    filter: String
+  ): CustomerPage
   getCustomer(id: ID!): Customer
 
-  getPageOfCategories(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): CategoryPage
+  getPageOfCategories(
+    page: Int
+    perPage: Int
+    sortField: String
+    sortOrder: String
+    filter: String
+  ): CategoryPage
   getCategory(id: ID!): Category
 
-  getPageOfProducts(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): ProductPage
+  getPageOfProducts(
+    page: Int
+    perPage: Int
+    sortField: String
+    sortOrder: String
+    filter: String
+  ): ProductPage
   getProduct(id: ID!): Product
 
-  getPageOfCommands(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): CommandPage
+  getPageOfCommands(
+    page: Int
+    perPage: Int
+    sortField: String
+    sortOrder: String
+    filter: String
+  ): CommandPage
   getCommand(id: ID!): Command
 
-  getPageOfReviews(page: Int, perPage: Int, sortField: String, sortOrder: String, filter: String): ReviewPage
+  getPageOfReviews(
+    page: Int
+    perPage: Int
+    sortField: String
+    sortOrder: String
+    filter: String
+  ): ReviewPage
   getReview(id: ID!): Review
 }
 

@@ -1,68 +1,70 @@
 /** @format */
 
-import React from 'react';
-import styled from 'styled-components';
-import ListItem from '../../../../components/ListItem';
-import { useRouter } from 'next/router'
-
-
+import React from "react";
+import ListItem from "../../../../components/ListItem";
+import { useRouter } from "next/router";
+import StyledListWrapper from "../../../../components/ListWrapper";
 
 interface Props {
   productList: Product[];
   removeProduct: (id: number) => void;
-  fetchMoreList:()=>void
+  fetchMoreList: () => void;
 }
-
-const StyledListWrapper = styled.div`
-  height:25rem;
-  overflow-y : auto;
-  border:0.5px solid gray;
-  padding: 1rem;
-  border-radius:0.5rem;
-`
 
 const ProductListContainer: React.FC<Props> = ({
   productList,
   removeProduct,
-  fetchMoreList
+  fetchMoreList,
 }) => {
-  const router = useRouter()
+  const router = useRouter();
 
-  const handleScroll = (e:React.UIEvent<HTMLDivElement, UIEvent>) => {
-    const {currentTarget} = e
-    if (
+  const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+    const { currentTarget } = e;
+
+    const isEndOfScroll =
       currentTarget.scrollTop + currentTarget.clientHeight >=
-      currentTarget.scrollHeight
-    ) {
-    fetchMoreList()
-    console.log("fetch!!")
-    }
+      currentTarget.scrollHeight;
+
+    isEndOfScroll && fetchMoreList();
   };
 
-  const goToDetailProduct = (id:string) =>{
-    router.push(`/products/${id}`)
-  }
+  const goToDetailProduct = (id: string) => {
+    router.push(`/product/${id}`);
+  };
 
   const infoSet = {
-    reference:"제품명",
-    price:"가격"
-  }
+    reference: "Product-Name",
+    price: "Price($)",
+    category_name: "Category",
+  };
 
-  const clickFnSets = [{
-    name:"제거하기",
-    argKeyOfDataSet:"id",
-    clickFn: removeProduct
-  },{
-    name:"상세보기",
-    argKeyOfDataSet:"id",
-    clickFn: goToDetailProduct
-  }]
+  const clickFnSets = [
+    {
+      name: "DELETE",
+      argKeyOfDataSet: "id",
+      clickFn: removeProduct,
+    },
+    {
+      name: "GO TO DETAIL",
+      argKeyOfDataSet: "id",
+      clickFn: goToDetailProduct,
+    },
+  ];
 
   return (
     <StyledListWrapper onScroll={handleScroll}>
       {productList.map((li) => {
+        const data = {
+          ...li,
+          category_name: li.Category ? li.Category.name : "해당없음",
+        };
         return (
-          <ListItem key={li.id} data={li} infoSet={infoSet} clickFnSet={clickFnSets}/>
+          <ListItem
+            key={li.id}
+            data={data}
+            infoSet={infoSet}
+            clickFnSet={clickFnSets}
+          />
         );
       })}
     </StyledListWrapper>

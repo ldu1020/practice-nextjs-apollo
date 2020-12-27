@@ -1,52 +1,59 @@
-import React from 'react'
-
+import React from "react";
 
 interface Props {
-  data: DataSet
-  infoSet: InfoSet
+  data: DataSet;
+  infoSet: InfoSet;
   clickFnSet: ClickFnSet[];
 }
 
 interface InfoSet {
-  [itemIndex :string] : string
+  [itemIndex: string]: string;
 }
-interface DataSet{
-  [itemIndex : string] : any
-}
-
-
-interface ClickFnSet{
-  name:string
-  argKeyOfDataSet: string | string[]
-  clickFn : (data : any | any[]) => void
+interface DataSet {
+  [itemIndex: string]: any;
 }
 
+interface ClickFnSet {
+  name: string;
+  argKeyOfDataSet: string | string[];
+  clickFn: (data: any | any[]) => void;
+}
 
-const ListItem = ({ data ,infoSet,clickFnSet}: Props) => {
+const ListItem = ({ data, infoSet, clickFnSet }: Props) => {
+  const InfoArr = Object.keys(infoSet);
 
-  const InfoArr = Object.keys(infoSet)
-  return(
-  <div>
-    <ul>
-    {InfoArr.map((list)=> <p>{infoSet[list]} : {data[list]}</p>
-)}
-    </ul>
+  return (
     <div>
-      {clickFnSet.map(({argKeyOfDataSet, clickFn , name})=>
-        (
-        <button onClick={()=>{
-         if(Array.isArray(argKeyOfDataSet)){
-           const argArr = argKeyOfDataSet.map(li=>data[li])
-           clickFn.apply(null,[argArr])
-         }else{
-           clickFn(data[argKeyOfDataSet])
-         }
-        }}>{name}</button>
-        )
-      )}
+      <ul>
+        {InfoArr.map((list) => {
+          return (
+            <p key={list}>
+              {infoSet[list]} : {data[list] ? data[list] : ""}
+            </p>
+          );
+        })}
+      </ul>
+      <div>
+        {clickFnSet.map(({ argKeyOfDataSet, clickFn, name }) => {
+          return (
+            <button
+              key={name}
+              onClick={() => {
+                if (Array.isArray(argKeyOfDataSet)) {
+                  const argArr = argKeyOfDataSet.map((li) => data[li]);
+                  clickFn.apply(null, [argArr]);
+                } else {
+                  clickFn(data[argKeyOfDataSet]);
+                }
+              }}
+            >
+              {name}
+            </button>
+          );
+        })}
+      </div>
     </div>
-   
-  </div>
-)}
+  );
+};
 
-export default ListItem
+export default ListItem;

@@ -1,24 +1,17 @@
-import {
-    useQuery,
-    gql,
-    useMutation,
-  } from '@apollo/client';
-  
+import { useQuery, gql, useMutation } from "@apollo/client";
 
 export const GET_ALL_CATEGORY = gql`
-   query AllCategories($page:Int,$perPage:Int){
-    allCategories(page:$page,perPage:$perPage){
+  query AllCategories($page: Int, $perPage: Int) {
+    allCategories(page: $page, perPage: $perPage) {
       id
       name
-    }}
+    }
+  }
 `;
 
 export const FETCH_ADD_CATEGORY = gql`
-  mutation CreateCategory($id: ID!, $name:String!) {
-    createCategory(
-      id: $id
-     name:$name
-    ) {
+  mutation CreateCategory($id: ID!, $name: String!) {
+    createCategory(id: $id, name: $name) {
       id
       name
     }
@@ -31,24 +24,22 @@ export const FETCH_REMOVE_CATEGORY = gql`
   }
 `;
 
-
 export const GET_CATEGORY_DETAIL = gql`
   query Category($id: ID!) {
     Category(id: $id) {
       id
-      category_id
       name
-      Product{
-          id
-          reference
-          price
+      Products {
+        id
+        reference
+        price
       }
     }
   }
 `;
 
-export function useGetAllCategory(page:number = 0,perPage:number = 7) {
-  return useQuery(GET_ALL_CATEGORY,{variables:{page,perPage}});
+export function useGetAllCategory() {
+  return useQuery(GET_ALL_CATEGORY);
 }
 
 export function useAddCategory() {

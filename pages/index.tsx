@@ -1,23 +1,17 @@
 /** @format */
 
-import ProductComponent from '../src/features/product';
-import { ApolloProvider } from '@apollo/client';
-import { client } from '../generated/graphql';
-import Layout from '../src/components/Layout';
-import CategoryContainer from '../src/features/category/category';
+import Link from "next/link";
+import Layout from "../src/components/Layout";
 
 const IndexPage = () => (
-  <div>
-      <ApolloProvider client={client}>
-    <Layout title="PRODUCT">
-        <ProductComponent />
-    </Layout>
-    <Layout title="Category">
-      <CategoryContainer />
-    </Layout>
-      </ApolloProvider>
-  </div>
-    
+  <Layout title="home">
+    <Link href="/product" passHref>
+      <a>=== Go To Product List</a>
+    </Link>
+    <Link href="/category" passHref>
+      <a>=== Go To Category LIst</a>
+    </Link>
+  </Layout>
 );
 
 export default IndexPage;

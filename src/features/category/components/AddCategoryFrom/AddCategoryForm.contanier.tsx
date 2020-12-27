@@ -1,7 +1,7 @@
 /** @format */
 
-import React, { useState } from 'react';
-import Input from '../../components/Input';
+import React, { useState } from "react";
+import Input from "../../../../components/Input";
 
 interface Props {
   addCategory: (item: Category) => void;
@@ -10,7 +10,7 @@ interface Props {
 const AddCategoryFormContainer: React.FC<Props> = ({ addCategory }) => {
   const [state, setstate] = useState({
     id: 0,
-    name: '',
+    name: "",
   });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +21,7 @@ const AddCategoryFormContainer: React.FC<Props> = ({ addCategory }) => {
     });
   };
   const onClick = () => {
-    addCategory({...state,id:Date.now()});
+    addCategory({ ...state, id: Date.now() });
     setstate({
       id: 0,
       name: "",
@@ -30,9 +30,9 @@ const AddCategoryFormContainer: React.FC<Props> = ({ addCategory }) => {
   return (
     <div>
       <Input
-        type='text'
-        label="분류명"
-        name='name'
+        type="text"
+        label="CATEGORY-NAME"
+        name="name"
         onChange={onChange}
         value={state.name}
       />

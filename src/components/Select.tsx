@@ -23,7 +23,7 @@ const StyledLabel = styled.label`
   font-size: 0.8rem;
 `;
 
-const StyledInput = styled.input`
+const StyledSelect = styled.select`
   display: absolute;
   bottom: 0;
   height: 100%;
@@ -35,17 +35,17 @@ const StyledInput = styled.input`
   }
 `;
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   name?: string;
   label?: string;
   width?: string;
   height?: string;
 }
 
-const Input: React.FunctionComponent<Props> = ({
+const Select: React.FunctionComponent<Props> = ({
   width = "10rem",
-  height = "1.5rem",
-  name = "input",
+  height = "1.8rem",
+  name = "Select",
   label,
   ...rest
 }) => {
@@ -56,9 +56,9 @@ const Input: React.FunctionComponent<Props> = ({
           {label}
         </StyledLabel>
       )}
-      <StyledInput name={name} {...rest} />
+      <StyledSelect name={name} {...rest} />
     </StyledWrapper>
   );
 };
 
-export default Input;
+export default Select;
