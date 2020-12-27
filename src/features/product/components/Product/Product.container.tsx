@@ -5,7 +5,7 @@ import {
   useAddProduct,
   useRemoveProduct,
   useGetAllProduct,
-} from "../../../../../graphql/graphql";
+} from "../../../../../graphql/product";
 import ProductPresenter from "./Product.presenter";
 
 const ProductContainer = () => {
